@@ -1,4 +1,5 @@
-# Nici家族
+# 大平台
+- https://shuming-yu.github.io/demo/dist/#/
 
 ## 參考網址
 
@@ -13,5 +14,5 @@
 
 ### 參考網址
 
-1. 在 Vue-cli 中使用 i18n 實作多國語系
-- 參考 : https://medium.com/easons-murmuring/%E5%9C%A8-vue-cli-%E4%B8%AD%E4%BD%BF%E7%94%A8-i18n-%E5%AF%A6%E4%BD%9C%E5%A4%9A%E5%9C%8B%E8%AA%9E%E7%B3%BB-720ec360783e
+1. 使用 Vue-cli 4 / Vue 3 開發 i18n 國際化多國語言
+- 參考 : https://easonchang0115.github.io/blogs/frontEnd/2021/20210625_1.html#vue-i18n-%E5%A5%97%E4%BB%B6
