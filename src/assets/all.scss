@@ -1,0 +1,13 @@
+/* 參考 : https://bootstrap5.hexschool.com/docs/5.1/customize/sass/ */
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "~bootstrap/scss/functions";
+
+
+// 2. Include any default variable overrides here
+// 3. Include remainder of required Bootstrap stylesheets
+@import "./helpers/variables"; // 載入客製化變數，其原始內容是複製檔案 "../node_modules/bootstrap/scss/variables"
+@import "~bootstrap/scss/mixins";
+
+
+// 4. Include any optional Bootstrap CSS as needed
+@import "~bootstrap/scss/bootstrap"; // 目前載入所有的元件，可以自行調整成載入部分項目

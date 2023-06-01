@@ -17,7 +17,7 @@
 </template>
 
 <style lang="scss">
-@import "bootstrap";
+@import "./assets/all.scss";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
