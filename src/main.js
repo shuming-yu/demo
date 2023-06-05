@@ -13,6 +13,6 @@ const app = createApp(App);
 app.use(router);
 app.use(i18n);
 app.use(VueAxios, axios);
-app.provide('axios', app.config.globalProperties.axios);
+// app.provide('axios', app.config.globalProperties.axios);
 
 app.mount('#app');

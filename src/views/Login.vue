@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <div class="loginbox container mt-5">
-      <form class="form" @submit.prevent>
+      <form class="form" @submit.prevent="register">
         <!-- <div class="col-md-6"> -->
         <h2 class="mb-3" style="text-align: center">{{ $t("BackendSystem") }}</h2>
         <div class="group mb-2">
@@ -32,7 +32,7 @@
           <button class="btn btn-lg btn-block" type="submit">
             {{ $t("Login") }}
           </button>
-          <button class="btn btn-lg btn-block disabled" type="submit">
+          <button class="btn btn-lg btn-block" type="submit">
             {{ $t("Register") }}
           </button>
         </div>
@@ -44,21 +44,35 @@
 
 <script>
 import { ref, reactive } from 'vue';
+import axios from 'axios';
 export default {
   setup(){
+    const webApi = `${process.env.VUE_APP_WebAPI}shumingyu/`;
     const user = ref({
       username: "",
       password: ""
     });
 
     function singIn(){
-      let api = `${process.env.VUE_APP_WebAPI}/shumingyu`;
       
+    }
+
+    function register(){
+      const account = user.value.username;
+      const name = user.value.password;
+      let api = webApi + `user?account=${account}&name=${name}`;
+      // let api = webApi + String.format("user?account={0}&name={1}", account, name);
+      console.log(api);
+      axios.post(api)
+        .then((res)=>{
+          console.log(res);
+        })
     }
 
     return{
       user,
-      singIn
+      singIn,
+      register
     }
   }
 
