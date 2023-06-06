@@ -4,6 +4,7 @@ import router from './router';
 import i18n from './plugins/lang';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import './methods/ExPrototype';
 import './assets/all.scss';
 
 //  init

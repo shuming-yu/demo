@@ -60,8 +60,8 @@ export default {
     function register(){
       const account = user.value.username;
       const name = user.value.password;
-      let api = webApi + `user?account=${account}&name=${name}`;
-      // let api = webApi + String.format("user?account={0}&name={1}", account, name);
+      // let api = webApi + `user?account=${account}&name=${name}`;
+      let api = webApi + String.format("user?account={0}&name={1}", account, name);
       console.log(api);
       axios.post(api)
         .then((res)=>{
