@@ -6,7 +6,8 @@ import tw from '../i18n/zh-TW.json'; //  存放繁體中文翻譯
 import cn from '../i18n/zh-CN.json'; //  存放簡體中文翻譯
 
 const i18n = createI18n({
-  locale: process.env.VUE_APP_Language, // 語言標識
+  locale: process.env.VUE_APP_Language, // 設定語言
+  // fallbackLocale: 'tw',   // 若選擇的語言缺少翻譯則退回的語言
   messages: {
     'en-US': en,
     'zh-TW': tw,

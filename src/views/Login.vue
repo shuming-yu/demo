@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div id="wrapper">
     <div class="loginbox container mt-5">
       <form class="form" @submit.prevent="register">
@@ -47,6 +48,7 @@ import { ref, reactive } from 'vue';
 import axios from 'axios';
 export default {
   setup(){
+    const isLoading = ref(null);
     const webApi = `${process.env.VUE_APP_WebAPI}shumingyu/`;
     const user = ref({
       username: "",
@@ -63,13 +65,17 @@ export default {
       // let api = webApi + `user?account=${account}&name=${name}`;
       let api = webApi + String.format("user?account={0}&name={1}", account, name);
       console.log(api);
+      
+      isLoading.value = true;
       axios.post(api)
         .then((res)=>{
+          isLoading.value = false;
           console.log(res);
         })
     }
 
     return{
+      isLoading,
       user,
       singIn,
       register
