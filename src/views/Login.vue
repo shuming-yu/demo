@@ -45,7 +45,7 @@
 
 <script>
 import { ref, reactive } from 'vue';
-import axios from 'axios';
+import $axios from 'axios';
 export default {
   setup(){
     const isLoading = ref(null);
@@ -65,9 +65,9 @@ export default {
       // let api = webApi + `user?account=${account}&name=${name}`;
       let api = webApi + String.format("user?account={0}&name={1}", account, name);
       console.log(api);
-      
+
       isLoading.value = true;
-      axios.post(api)
+      $axios.post(api)
         .then((res)=>{
           isLoading.value = false;
           console.log(res);

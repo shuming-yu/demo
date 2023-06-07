@@ -8,11 +8,11 @@
 
 <script>
 import { ref, inject } from 'vue';
-import axios from 'axios';
+import $axios from 'axios';
 export default{
   setup(){
     // const $axios = inject('axios');
-
+    const $swal = inject('$swal');
     const user = ref({
       username: "",
       password: ""
@@ -23,9 +23,12 @@ export default{
       let api = "https://randomuser.me/api/";
       console.log(api);
 
-
-      axios.get(api)
+      $axios.get(api)
         .then((res) => {
+          $swal({
+            icon: 'success',
+            title: `將 xxx 加入購物車！`,
+          });
           console.log(res);
         })
         .catch((err) => {
