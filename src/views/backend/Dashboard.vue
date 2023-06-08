@@ -4,6 +4,7 @@
 </template>
 
 <script>
+import 'bootstrap/dist/js/bootstrap.bundle';
 import Navbar from '../../components/Navbar.vue';
 
 export default{
@@ -12,7 +13,7 @@ export default{
   },
 
   setup(){
-
+    
   }
 }
 
