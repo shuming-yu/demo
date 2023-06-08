@@ -41,7 +41,9 @@ export default{
 
     return{
       modal,
-      myModal
+      myModal,
+      showModal,
+      hideModal
     }
   }
 }

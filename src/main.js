@@ -8,6 +8,12 @@ import Loading from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import PrimeVue from 'primevue/config';
+import "primevue/resources/themes/lara-light-indigo/theme.css";     
+import "primevue/resources/primevue.min.css";
+import Button from 'primevue/button';
+import Toast from 'primevue/toast';
+import ToastService from 'primevue/toastservice';
 
 import './methods/ExPrototype';
 import './assets/all.scss';
@@ -29,8 +35,12 @@ app.use(i18n);
 app.use(VueAxios, axios);
 // app.provide('axios', app.config.globalProperties.axios);
 app.use(VueSweetalert2, options);
+app.use(PrimeVue);
+app.use(ToastService);
 
 // component : 註冊全局組件
 app.component('Loading', Loading);
+app.component('Button', Button);
+app.component('Toast', Toast);
 
 app.mount('#app');
