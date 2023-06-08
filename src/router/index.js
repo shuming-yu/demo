@@ -20,8 +20,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   },
   {
-    path: '/products',
-    component: () => import(/* webpackChunkName: "about" */ '../views/backend/Products.vue')
+    path: '/dashboard',
+    component: () => import(/* webpackChunkName: "about" */ '../views/backend/Dashboard.vue'),
+    children:[
+      {
+        path: 'products',
+        component: () => import(/* webpackChunkName: "about" */ '../views/backend/Products.vue')
+      }
+    ]
   },
   /* 重新導向說明：https://next.router.vuejs.org/guide/essentials/dynamic-matching.html#catch-all-404-not-found-route */
   // 404頁面
