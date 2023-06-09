@@ -22,6 +22,9 @@
 import Modal from 'bootstrap/js/dist/modal';
 import { ref, onMounted } from 'vue';
 export default{
+  props:{
+    
+  },
   setup(){
     const myModal = ref(null);
     const modal = ref(null);  // ref="modal"
