@@ -1,4 +1,4 @@
-<i18n src="./resources/Products.json"></i18n>
+<!-- <i18n src="./resources/Products.json"></i18n> -->
 
 <template>
   <Loading :active="isLoading"></Loading>
@@ -42,7 +42,9 @@
     </DataTable>
   </div>
 
-  <ProductModal ref="productModal"></ProductModal>
+  <ProductModal ref="productModal"
+                :propProduct="tempProduct"
+                @pushData="getData"></ProductModal>
 </template>
 
 <script>
@@ -78,13 +80,17 @@ export default{
       $axios.get(`${webApi}/product`)
             .then(res=>{
               allProducts.value = res.data.data;
-              console.log(allProducts.value);
+              // console.log(allProducts.value);
             })
     }
 
     onMounted(()=>{
       getProducts();
     })
+
+    const tempProduct = ref({});
+
+
 
     const productModal = ref(null);
     function openModal(){

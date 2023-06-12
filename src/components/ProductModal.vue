@@ -44,8 +44,9 @@
             </div> -->
             <div class="col-12">
               <div class="mb-3">
-                <label for="title" class="form-label">標題</label>
-                <input type="text" class="form-control" id="title"
+                <label for="title" class="form-label">商品名稱</label>
+                <input type="text" class="form-control" id="name"
+                        v-model="tempProduct.name"
                         placeholder="請輸入標題">
               </div>
   
@@ -53,25 +54,29 @@
                 <div class="mb-3 col-md-6">
                   <label for="category" class="form-label">分類</label>
                   <input type="text" class="form-control" id="category"
+                          v-model="tempProduct.category"
                           placeholder="請輸入分類">
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="price" class="form-label">單位</label>
-                  <input type="text" class="form-control" id="unit"
+                  <input type="text" class="form-control" id="sku"
+                          v-model="tempProduct.sku"
                           placeholder="請輸入單位">
                 </div>
               </div>
   
               <div class="row gx-2">
                 <div class="mb-3 col-md-6">
-                  <label for="origin_price" class="form-label">原價</label>
-                  <input type="number" class="form-control" id="origin_price"
-                          placeholder="請輸入原價">
+                  <label for="origin_price" class="form-label">價格</label>
+                  <input type="number" class="form-control" id="price"
+                          v-model="tempProduct.price"
+                          placeholder="請輸入價格">
                 </div>
                 <div class="mb-3 col-md-6">
-                  <!-- <label for="price" class="form-label">售價</label>
-                  <input type="number" class="form-control" id="price"
-                          placeholder="請輸入售價"> -->
+                  <label for="price" class="form-label">庫存</label>
+                  <input type="number" class="form-control" id="stock"
+                          v-model="tempProduct.stock"
+                          placeholder="請輸入庫存">
                 </div>
               </div>
               <hr>
@@ -79,7 +84,14 @@
               <div class="mb-3">
                 <label for="description" class="form-label">產品描述</label>
                 <textarea type="text" class="form-control" id="description"
+                          v-model="tempProduct.description"
                           placeholder="請輸入產品描述"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">輸入圖片網址</label>
+                <input type="text" class="form-control" id="image"
+                        v-model="tempProduct.imageURL"
+                        placeholder="請輸入圖片連結">
               </div>
               <!-- <div class="mb-3">
                 <label for="content" class="form-label">說明內容</label>
@@ -101,7 +113,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">確認</button>
+          <button type="button" class="btn btn-primary" @click="pushData">確認</button>
           <button type="button" class="btn btn-outline-secondary"
                   data-bs-dismiss="modal">取消
           </button>
@@ -116,7 +128,17 @@
 import Modal from 'bootstrap/js/dist/modal';
 import { ref, onMounted } from 'vue';
 export default{
-  setup(){
+  props: ['propProduct'],
+  setup(props, { attrs, slots, emit, expose }){
+    console.log(props);
+    const { tempProduct } = props;
+    console.log(tempProduct);
+
+    function pushData(){
+      emit('pushData', tempProduct);
+    }
+
+
     const myModal = ref(null);
     const modal = ref(null);  // ref="modal"
     
@@ -134,6 +156,7 @@ export default{
     }
 
     return{
+      pushData,
       modal,
       myModal,
       showModal,
