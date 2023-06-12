@@ -1,21 +1,28 @@
+<i18n src="./resources/Products.json"></i18n>
+
 <template>
   <Loading :active="isLoading"></Loading>
 
-  <div class="card">
-    <DataTable :value="allProducts" tableStyle="min-width: 50rem">
+  <div class="m-3 text-end">
+    <button class="btn btn-primary" type="button" @click="openModal">
+      新增一筆產品
+    </button>
+  </div>
+  <div class="m-3 card">
+    <DataTable v-model:selection="selectedProduct" :value="allProducts" sortField="Name" selectionMode="single" tableStyle="min-width: 50rem">
         <!-- <template #header>
             <div class="flex flex-wrap align-items-center justify-content-between gap-2">
                 <span class="text-xl text-900 font-bold">Products</span>
                 <Button icon="pi pi-refresh" rounded raised />
             </div>
         </template> -->
-        <Column field="Name" header="Name"></Column>
-        <Column header="Image">
+        <Column field="Name" header="Name" sortable></Column>
+        <Column header="Image" sortable>
             <template #body="slotProps">
               <img :src="`${slotProps.data.ImageURL}`" :alt="slotProps.data.ImageURL" class="w-6rem shadow-2 border-round img-fluid" width="300" height="100"/>
             </template>
         </Column>
-        <Column field="Price" header="Price">
+        <Column field="Price" header="Price" sortable>
             <template #body="slotProps">
                 {{ formatCurrency(slotProps.data.Price) }}
             </template>
@@ -60,6 +67,7 @@ export default{
     };
 
     const allProducts = ref();
+    const selectedProduct = ref();
     const columns = [
       { field: 'Name', header: 'Name' },
       { field: 'ImageURL', header: 'ImageURL' },
@@ -87,6 +95,7 @@ export default{
       isLoading,
       formatCurrency,
       allProducts,
+      selectedProduct,
       columns,
       getProducts,
       productModal,
