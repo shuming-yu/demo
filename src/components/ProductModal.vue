@@ -89,7 +89,7 @@
               </div>
               <div class="mb-3">
                 <label for="description" class="form-label">輸入圖片網址</label>
-                <input type="text" class="form-control" id="image"
+                <input type="text" class="form-control" id="imageURL"
                         v-model="tempProduct.imageURL"
                         placeholder="請輸入圖片連結">
               </div>
@@ -97,18 +97,19 @@
                 <label for="content" class="form-label">說明內容</label>
                 <textarea type="text" class="form-control" id="content"
                           placeholder="請輸入產品說明內容"></textarea>
-              </div>
+              </div> -->
               <div class="mb-3">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox"
                           :true-value="1"
                           :false-value="0"
-                          id="is_enabled">
-                  <label class="form-check-label" for="is_enabled">
+                          id="enabled"
+                          v-model="tempProduct.enabled">
+                  <label class="form-check-label" for="enabled">
                     是否啟用
                   </label>
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>
@@ -126,18 +127,32 @@
 
 <script>
 import Modal from 'bootstrap/js/dist/modal';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 export default{
-  props: ['propProduct'],
-  setup(props, { attrs, slots, emit, expose }){
-    console.log(props);
-    const { tempProduct } = props;
-    console.log(tempProduct);
+  // props: ['propProduct'],
+  props: {
+    propProduct: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  emits: ['push-data'],
+
+
+  setup(props, { attrs, slots, emit }){
+    // console.log(props);
+    const tempProduct = ref({});
+    // console.log(tempProduct);
 
     function pushData(){
-      emit('pushData', tempProduct);
+      emit('push-data', tempProduct.value);
     }
-
+    watch(
+      () => {
+        tempProduct.value = props.propProduct;
+      },
+      { deep: true }
+    )
 
     const myModal = ref(null);
     const modal = ref(null);  // ref="modal"
@@ -156,6 +171,7 @@ export default{
     }
 
     return{
+      tempProduct,
       pushData,
       modal,
       myModal,

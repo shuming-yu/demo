@@ -1,4 +1,4 @@
-<!-- <i18n src="./resources/Products.json"></i18n> -->
+<i18n src="./resources/Products.json"></i18n>
 
 <template>
   <Loading :active="isLoading"></Loading>
@@ -43,12 +43,12 @@
   </div>
 
   <ProductModal ref="productModal"
-                :propProduct="tempProduct"
-                @pushData="getData"></ProductModal>
+                :propProduct="productList"
+                @push-data="updateProduct"></ProductModal>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import $axios from 'axios';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -62,14 +62,15 @@ export default{
   },
 
   setup(){
-    const webApi = process.env.VUE_APP_WebAPI;
+    const webApi = `${process.env.VUE_APP_WebAPI}/product`;
+    const $swal = inject('$swal');
     const isLoading = ref(false);
     const formatCurrency = (value) => {
       return value.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' });
     };
 
-    const allProducts = ref();
-    const selectedProduct = ref();
+    const allProducts = ref([]);
+    const selectedProduct = ref({});
     const columns = [
       { field: 'Name', header: 'Name' },
       { field: 'ImageURL', header: 'ImageURL' },
@@ -77,10 +78,9 @@ export default{
       { field: 'Stock', header: 'Stock' }
     ];
     function getProducts(){
-      $axios.get(`${webApi}/product`)
+      $axios.get(webApi)
             .then(res=>{
               allProducts.value = res.data.data;
-              // console.log(allProducts.value);
             })
     }
 
@@ -88,8 +88,27 @@ export default{
       getProducts();
     })
 
-    const tempProduct = ref({});
-
+    const productList = ref({});
+    function updateProduct(item){
+      let a = {
+        category:"課程",
+        description: "123",
+        enabled: 1,
+        imageURL: "",
+        name: "TRX",
+        price: 100,
+        sku: "堂",
+        stock: 2
+      };
+      // productList.value = item;
+      $axios.post(webApi, a)
+            .then(res=>{
+              console.log(res);
+            })
+            .catch(err=>{
+              console.log(err);
+            })
+    }
 
 
     const productModal = ref(null);
@@ -102,6 +121,8 @@ export default{
       formatCurrency,
       allProducts,
       selectedProduct,
+      productList,
+      updateProduct,
       columns,
       getProducts,
       productModal,
