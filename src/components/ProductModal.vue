@@ -1,4 +1,4 @@
-<!-- <i18n src="./resources/ProductModal.json"></i18n> -->
+<i18n src="./resources/ProductModal.json"></i18n>
 
 <template>
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">

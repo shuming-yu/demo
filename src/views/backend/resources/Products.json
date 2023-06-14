@@ -1,14 +1,17 @@
 {
   "en-US":
   {
-    "Product": "Product"
+    "Product": "Product",
+    "Test": "Test"
   },
   "zh-CN":
   {
-    "Product": "产品"
+    "Product": "产品",
+    "Test": "测试"
   },
   "zh-TW":
   {
-    "Product": "產品"
+    "Product": "產品",
+    "Test": "測試"
   }
 }

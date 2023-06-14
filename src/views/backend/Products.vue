@@ -5,7 +5,7 @@
 
   <div class="m-3 text-end">
     <button class="btn btn-primary" type="button" @click="openModal">
-      新增一筆產品
+      {{ $t("Add") + $t("Product") }}
     </button>
   </div>
   <div class="m-3 card">
@@ -90,24 +90,27 @@ export default{
 
     const productList = ref({});
     function updateProduct(item){
-      let a = {
-        category:"課程",
-        description: "123",
-        enabled: 1,
-        imageURL: "",
-        name: "TRX",
-        price: 100,
-        sku: "堂",
-        stock: 2
-      };
-      // productList.value = item;
-      $axios.post(webApi, a)
-            .then(res=>{
-              console.log(res);
-            })
-            .catch(err=>{
-              console.log(err);
-            })
+      productList.value = item;
+      // $axios.post(webApi, productList.value)
+      //       .then(res=>{
+      //         console.log(res);
+      //       })
+      //       .catch(err=>{
+      //         console.log(err);
+      //       })
+
+      $axios({
+        method: "post",
+        url: webApi,
+        data: productList.value,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then(res=>{
+            console.log(res);
+          })
+        .catch(err=>{
+            console.log(err);
+          })
     }
 
 
