@@ -16,6 +16,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
+    path: '/Reactive_Ref',
+    name: 'Reactive_Ref',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Reactive_Ref.vue')
+  },
+  {
     path: '/login',
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   },

@@ -129,18 +129,18 @@
 import Modal from 'bootstrap/js/dist/modal';
 import { ref, onMounted, watch } from 'vue';
 export default{
-  // props: ['propProduct'],
-  props: {
-    propProduct: {
-      type: Object,
-      default: () => ({})
-    }
-  },
+  props: ['propProduct', 'num'],
+  // props: {
+  //   propProduct: {
+  //     type: Object,
+  //     default: () => ({})
+  //   }
+  // },
   emits: ['push-data'],
 
 
   setup(props, { attrs, slots, emit }){
-    // console.log(props);
+    console.log(props);
     const tempProduct = ref({});
     // console.log(tempProduct);
 
@@ -156,6 +156,8 @@ export default{
 
     const myModal = ref(null);
     const modal = ref(null);  // ref="modal"
+    console.log('myModal:', myModal);
+    console.log('modal:', modal);
     
     onMounted(() => {
       myModal.value = new Modal(modal.value);
