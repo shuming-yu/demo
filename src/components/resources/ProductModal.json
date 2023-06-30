@@ -1,14 +1,38 @@
 {
   "en-US":
   {
+    "Category": "Category",
+    "IsEnabled": "Is Enabled",
+    "Price": "Price",
+    "Description": "Description",
+    "Name": "Name",
+    "Stock": "Stock",
+    "Sku": "Sku",
+    "ImageURL": "Image URL",
     "Product": "Product"
   },
   "zh-CN":
   {
+    "Category": "分类",
+    "IsEnabled": "是否启用",
+    "Price": "价格",
+    "Description": "描述",
+    "Name": "名称",
+    "Stock": "库存",
+    "Sku": "单位",
+    "ImageURL": "图片网址",
     "Product": "产品"
   },
   "zh-TW":
   {
+    "Category": "分類",
+    "IsEnabled": "是否啟用",
+    "Price": "價格",
+    "Description": "描述",
+    "Name": "名稱",
+    "Stock": "庫存",
+    "Sku": "單位",
+    "ImageURL": "圖片網址",
     "Product": "產品"
   }
 }

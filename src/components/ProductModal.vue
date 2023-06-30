@@ -6,7 +6,7 @@
       <div class="modal-content border-0">
         <div class="modal-header bg-dark text-white">
           <h5 class="modal-title" id="exampleModalLabel">
-            <span>{{ $t("Add") + $t("Product") }}</span>
+            <span>{{ t("Add") + t("Product") }}</span>
           </h5>
           <button type="button" class="btn-close"
                   data-bs-dismiss="modal" aria-label="Close"></button>
@@ -44,54 +44,54 @@
             </div> -->
             <div class="col-12">
               <div class="mb-3">
-                <label for="title" class="form-label">商品名稱</label>
+                <label for="title" class="form-label">{{ t("Product") + t("Name") }}</label>
                 <input type="text" class="form-control" id="name"
                         v-model="tempProduct.name"
-                        placeholder="請輸入標題">
+                        :placeholder="t('MsgPleaseInput', [t('Product') + t('Name')])">
               </div>
   
               <div class="row gx-2">
                 <div class="mb-3 col-md-6">
-                  <label for="category" class="form-label">分類</label>
+                  <label for="category" class="form-label">{{ t("Category") }}</label>
                   <input type="text" class="form-control" id="category"
                           v-model="tempProduct.category"
-                          placeholder="請輸入分類">
+                          :placeholder="t('MsgPleaseInput', [t('Category')])">
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="price" class="form-label">單位</label>
+                  <label for="price" class="form-label">{{ t("Sku") }}</label>
                   <input type="text" class="form-control" id="sku"
                           v-model="tempProduct.sku"
-                          placeholder="請輸入單位">
+                          :placeholder="t('MsgPleaseInput', [t('Sku')])">
                 </div>
               </div>
   
               <div class="row gx-2">
                 <div class="mb-3 col-md-6">
-                  <label for="origin_price" class="form-label">價格</label>
+                  <label for="origin_price" class="form-label">{{ t("Price") }}</label>
                   <input type="number" class="form-control" id="price"
                           v-model="tempProduct.price"
-                          placeholder="請輸入價格">
+                          :placeholder="t('MsgPleaseInput', [t('Price')])">
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="price" class="form-label">庫存</label>
+                  <label for="price" class="form-label">{{ t("Stock") }}</label>
                   <input type="number" class="form-control" id="stock"
                           v-model="tempProduct.stock"
-                          placeholder="請輸入庫存">
+                          :placeholder="t('MsgPleaseInput', [t('Stock')])">
                 </div>
               </div>
               <hr>
   
               <div class="mb-3">
-                <label for="description" class="form-label">產品描述</label>
+                <label for="description" class="form-label">{{ t("Product") + t("Description") }}</label>
                 <textarea type="text" class="form-control" id="description"
                           v-model="tempProduct.description"
-                          placeholder="請輸入產品描述"></textarea>
+                          :placeholder="t('MsgPleaseInput', [t('Product') + t('Description')])"></textarea>
               </div>
               <div class="mb-3">
-                <label for="description" class="form-label">輸入圖片網址</label>
+                <label for="description" class="form-label">{{ t("Input") + t("ImageURL") }}</label>
                 <input type="text" class="form-control" id="imageURL"
                         v-model="tempProduct.imageURL"
-                        placeholder="請輸入圖片連結">
+                        :placeholder="t('MsgPleaseInput', [t('ImageURL')])">
               </div>
               <!-- <div class="mb-3">
                 <label for="content" class="form-label">說明內容</label>
@@ -106,7 +106,7 @@
                           id="enabled"
                           v-model="tempProduct.enabled">
                   <label class="form-check-label" for="enabled">
-                    是否啟用
+                    {{ t("IsEnabled") }}
                   </label>
                 </div>
               </div>
@@ -114,9 +114,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="pushData">確認</button>
+          <button type="button" class="btn btn-primary" @click="pushData">{{ t("OK") }}</button>
           <button type="button" class="btn btn-outline-secondary"
-                  data-bs-dismiss="modal">取消
+                  data-bs-dismiss="modal">{{ t("Cancel") }}
           </button>
         </div>
       </div>
@@ -128,6 +128,8 @@
 <script>
 import Modal from 'bootstrap/js/dist/modal';
 import { ref, onMounted, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
 export default{
   props: ['propProduct', 'num'],
   // props: {
@@ -140,7 +142,8 @@ export default{
 
 
   setup(props, { attrs, slots, emit }){
-    console.log(props);
+    const { t } = useI18n();
+    // console.log('props:', props);
     const tempProduct = ref({});
     // console.log(tempProduct);
 
@@ -156,10 +159,11 @@ export default{
 
     const myModal = ref(null);
     const modal = ref(null);  // ref="modal"
-    console.log('myModal:', myModal);
-    console.log('modal:', modal);
+    // console.log('myModal:', myModal);
+    // console.log('modal:', modal);
     
     onMounted(() => {
+      // console.log('myModal:', modal.value);
       myModal.value = new Modal(modal.value);
       // myModal.value.show();
     })
@@ -173,6 +177,7 @@ export default{
     }
 
     return{
+      t,
       tempProduct,
       pushData,
       modal,

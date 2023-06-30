@@ -2,20 +2,14 @@
 
 <template>
   <Loading :active="isLoading"></Loading>
-
   <div class="m-3 text-end">
     <button class="btn btn-primary" type="button" @click="openModal">
-      {{ $t("Add") + $t("Product") }}
+      {{ t("Add") + t("Product") }}
     </button>
   </div>
+
   <div class="m-3 card">
-    <DataTable v-model:selection="selectedProduct" :value="allProducts" sortField="Name" selectionMode="single" tableStyle="min-width: 50rem">
-        <!-- <template #header>
-            <div class="flex flex-wrap align-items-center justify-content-between gap-2">
-                <span class="text-xl text-900 font-bold">Products</span>
-                <Button icon="pi pi-refresh" rounded raised />
-            </div>
-        </template> -->
+    <!-- <DataTable v-model:selection="selectedProduct" :value="allProducts" sortField="Name" selectionMode="single" tableStyle="min-width: 50rem">
         <Column field="Name" header="Name" sortable></Column>
         <Column header="Image" sortable>
             <template #body="slotProps">
@@ -27,18 +21,16 @@
                 {{ formatCurrency(slotProps.data.Price) }}
             </template>
         </Column>
-        <!-- <Column field="category" header="Category"></Column> -->
-        <!-- <Column field="rating" header="Reviews">
-            <template #body="slotProps">
-                <Rating :modelValue="slotProps.data.rating" readonly :cancel="false" />
-            </template>
+    </DataTable> -->
+    <DataTable v-model:selection="selectedProduct" :value="allProducts" selectionMode="single" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem">
+        <Column field="Category" :header="t('Category')" style="width: 25%" sortable></Column>
+        <Column field="Name" :header="t('Product')" style="width: 25%" sortable></Column>
+        <Column field="Price" :header="t('Price')" style="width: 25%" sortable>
+          <template #body="slotProps">
+              {{ formatCurrency(slotProps.data.Price) }}
+          </template>
         </Column>
-        <Column header="Status">
-            <template #body="slotProps">
-                <Tag :value="slotProps.data.inventoryStatus" :severity="getSeverity(slotProps.data)" />
-            </template>
-        </Column> -->
-        <!-- <template #footer> In total there are {{ products ? products.length : 0 }} products. </template> -->
+        <Column field="Is_enabled" :header="t('IsEnabled')" style="width: 25%"></Column>
     </DataTable>
   </div>
 
@@ -53,6 +45,7 @@
 <script>
 import { ref, onMounted, inject } from 'vue';
 import $axios from 'axios';
+import { useI18n } from 'vue-i18n';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ProductModal from '../../components/ProductModal.vue';
@@ -66,25 +59,20 @@ export default{
 
   setup(){
     const webApi = `${process.env.VUE_APP_WebAPI}/product`;
+    const { t } = useI18n();
     const $swal = inject('$swal');
     const isLoading = ref(false);
     const formatCurrency = (value) => {
-      return value.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' });
+      return value.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 });
     };
 
-    const allProducts = ref([]);
-    const selectedProduct = ref({});
-    const columns = [
-      { field: 'Name', header: 'Name' },
-      { field: 'ImageURL', header: 'ImageURL' },
-      { field: 'Price', header: 'Price' },
-      { field: 'Stock', header: 'Stock' }
-    ];
+    const allProducts = ref([]);  // 商品資料
+    const selectedProduct = ref({});  // 選取的商品
     function getProducts(){
       $axios.get(webApi)
             .then(res=>{
-              console.log(res);
-              // allProducts.value = res.data.data;
+              // console.log(res);
+              allProducts.value = res.data.data;
             })
             .catch(err=>{
               console.log(err);
@@ -95,16 +83,10 @@ export default{
       getProducts();
     })
 
-    const productList = ref({});
+    const productList = ref({});  // 新增商品資料
     function updateProduct(item){
+      console.log(item);
       productList.value = item;
-      // $axios.post(webApi, productList.value)
-      //       .then(res=>{
-      //         console.log(res);
-      //       })
-      //       .catch(err=>{
-      //         console.log(err);
-      //       })
 
       $axios({
         method: "post",
@@ -113,11 +95,19 @@ export default{
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then(res=>{
-            console.log(res);
-          })
+          $swal({
+            icon: 'success',
+            title: String.format(t("msgAddToCart", [ productList.value.name ]))
+          });
+          closeModal();
+          getProducts();
+        })
         .catch(err=>{
-            console.log(err);
-          })
+          $swal({
+            icon: 'error',
+            title: err.response.data.msg,
+          });
+        })
     }
 
 
@@ -125,15 +115,18 @@ export default{
     function openModal(){
       productModal.value.showModal();
     }
+    function closeModal(){
+      productModal.value.hideModal();
+    }
 
     return{
+      t,
       isLoading,
       formatCurrency,
       allProducts,
       selectedProduct,
       productList,
       updateProduct,
-      columns,
       getProducts,
       productModal,
       openModal

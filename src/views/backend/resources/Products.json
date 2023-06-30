@@ -1,17 +1,26 @@
 {
   "en-US":
   {
+    "Category": "Category",
+    "IsEnabled": "Is Enabled",
+    "Price": "Price",
     "Product": "Product",
-    "Test": "Test"
+    "msgAddToCart": "{0} add to Cart"
   },
   "zh-CN":
   {
+    "Category": "分类",
+    "IsEnabled": "是否启用",
+    "Price": "价格",
     "Product": "产品",
-    "Test": "测试"
+    "msgAddToCart": "将 {0} 加入购物车"
   },
   "zh-TW":
   {
+    "Category": "分類",
+    "IsEnabled": "是否啟用",
+    "Price": "價格",
     "Product": "產品",
-    "Test": "測試"
+    "msgAddToCart": "將 {0} 加入購物車"
   }
 }
