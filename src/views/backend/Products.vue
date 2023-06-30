@@ -22,7 +22,13 @@
             </template>
         </Column>
     </DataTable> -->
-    <DataTable v-model:selection="selectedProduct" :value="allProducts" selectionMode="single" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem">
+    <DataTable v-model:selection="selectedProduct" :value="allProducts" ref="dt" selectionMode="single" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem">
+        <template #header>
+            <div style="text-align: right">
+                <!-- <Button icon="pi pi-external-link" label="Export" @click="exportCSV($event)" /> -->
+                <button type="button" class="btn btn-success" @click="exportCSV($event)">Export</button>
+            </div>
+        </template>
         <Column field="Category" :header="t('Category')" style="width: 25%" sortable></Column>
         <Column field="Name" :header="t('Product')" style="width: 25%" sortable></Column>
         <Column field="Price" :header="t('Price')" style="width: 25%" sortable>
@@ -78,6 +84,10 @@ export default{
               console.log(err);
             })
     }
+    const dt = ref(null); // ref="dt"
+    const exportCSV = () => {
+      dt.value.exportCSV();
+    };
 
     onMounted(()=>{
       getProducts();
@@ -124,6 +134,8 @@ export default{
       isLoading,
       formatCurrency,
       allProducts,
+      dt,
+      exportCSV,
       selectedProduct,
       productList,
       updateProduct,
