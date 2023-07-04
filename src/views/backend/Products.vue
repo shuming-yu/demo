@@ -3,8 +3,11 @@
 <template>
   <Loading :active="isLoading"></Loading>
   <div class="m-3 text-end">
-    <button class="btn btn-primary" type="button" @click="openModal">
+    <button class="btn btn-primary mx-1" type="button" @click="openModal">
       {{ t("Add") + t("Product") }}
+    </button>
+    <button class="btn btn-danger" type="button" @click="openDelModal">
+      {{ t("Delete") }}
     </button>
   </div>
 
@@ -46,6 +49,8 @@
                 @push-data="updateProduct"></ProductModal>
   <!-- 元件的傳遞 ( props ) 不一定要加上 v-bind 也可以接受來至父層的資料，
   但沒有用 v-bind 的話，它只會接受「純文字」的形式 -->
+  <DelModal ref="delModal"
+            ></DelModal>
 </template>
 
 <script>
@@ -55,12 +60,14 @@ import { useI18n } from 'vue-i18n';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ProductModal from '../../components/ProductModal.vue';
+import DelModal from '../../components/DelModal.vue';
 
 export default{
   components:{
     DataTable,
     Column,
-    ProductModal
+    ProductModal,
+    DelModal
   },
 
   setup(){
@@ -129,6 +136,14 @@ export default{
       productModal.value.hideModal();
     }
 
+    const delModal = ref(null);
+    function openDelModal(){
+      delModal.value.showModal();
+    }
+    function closeDelModal(){
+      productModal.value.hideModal();
+    }
+
     return{
       t,
       isLoading,
@@ -141,7 +156,9 @@ export default{
       updateProduct,
       getProducts,
       productModal,
-      openModal
+      openModal,
+      delModal,
+      openDelModal
     }
   }
 }

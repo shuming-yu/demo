@@ -131,14 +131,16 @@ import { ref, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 export default{
+  // 基礎版
   props: ['propProduct', 'num'],
+  emits: ['push-data'],
+  // 詳細版
   // props: {
   //   propProduct: {
   //     type: Object,
   //     default: () => ({})
   //   }
   // },
-  emits: ['push-data'],
 
 
   setup(props, { attrs, slots, emit }){
