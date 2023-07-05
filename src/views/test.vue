@@ -1,3 +1,6 @@
+<!-- JavaScript 陣列中兩個冷門的方法：Every、Some : https://noob.tw/js-every-some/ -->
+<!-- JavaScript 之旅 (4) : https://ithelp.ithome.com.tw/articles/10239942 -->
+
 <template>
     <InputText v-model="globalFilter" placeholder="全局筛选" />
 

@@ -25,13 +25,13 @@
             </template>
         </Column>
     </DataTable> -->
-    <DataTable v-model:selection="selectedProduct" :value="allProducts" ref="dt" selectionMode="single" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem">
+    <DataTable v-model:selection="selectedProduct" :value="filteredProducts" ref="dt" selectionMode="single" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem">
         <template #header>
             <div style="text-align: right">
                 <button type="button" class="btn btn-success mx-2" @click="exportCSV($event)">{{ t("Export") }}</button>
                 <span class="p-input-icon-left">
                   <i class="pi pi-search" />
-                  <InputText placeholder="Search..." />
+                  <InputText v-model="globalFilter" placeholder="Search..." />
                   <!-- <InputText v-model="filters['global'].value" placeholder="Keyword Search" /> -->
               </span>
               </div>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { ref, onMounted, inject } from 'vue';
+import { reactive, ref, computed, onMounted, inject } from 'vue';
 import $axios from 'axios';
 import { useI18n } from 'vue-i18n';
 import DataTable from 'primevue/datatable';
@@ -169,7 +169,7 @@ export default{
         })
     }
 
-
+    // modal
     const productModal = ref(null);
     function openModal(){
       productModal.value.showModal();
@@ -193,6 +193,39 @@ export default{
       delModal.value.hideModal();
     }
 
+    // filter
+    const filters = reactive({});
+    const globalFilter = ref('');
+    const filteredProducts = computed(() => {
+      return allProducts.value.filter(product => {
+        let matched = true;
+
+        // 全局筛选
+        if (globalFilter.value) {
+          matched =
+            matched &&
+            Object.values(product).some(value =>
+              String(value).toLowerCase().includes(globalFilter.value.toLowerCase())
+            );
+            console.log(matched);
+        }
+
+        // 各个列的筛选
+        if (filters) {
+          Object.entries(filters).forEach(([field, filterValue]) => {
+            if (filterValue !== undefined && filterValue !== null && filterValue !== '') {
+              matched =
+                matched &&
+                String(product[field]).toLowerCase().includes(filterValue.toLowerCase());
+            }
+          });
+        }
+
+        return matched;
+      });
+    });
+
+
     return{
       t,
       isLoading,
@@ -208,7 +241,9 @@ export default{
       productModal,
       openModal,
       delModal,
-      openDelModal
+      openDelModal,
+      globalFilter,
+      filteredProducts
     }
   }
 }
