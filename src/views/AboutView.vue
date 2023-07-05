@@ -35,10 +35,13 @@ import $axios from 'axios';
 import { useToast } from 'primevue/usetoast';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Button from 'primevue/button';
+
 export default{
   components:{
     DataTable,
-    Column
+    Column,
+    Button
   },
 
   setup(){

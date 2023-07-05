@@ -11,7 +11,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import PrimeVue from 'primevue/config';
 import "primevue/resources/themes/lara-light-indigo/theme.css";     
 import "primevue/resources/primevue.min.css";
-import Button from 'primevue/button';
+import 'primeicons/primeicons.css';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 
@@ -40,7 +40,6 @@ app.use(ToastService);
 
 // component : 註冊全局組件
 app.component('Loading', Loading);
-app.component('Button', Button);
 app.component('Toast', Toast);
 
 app.mount('#app');

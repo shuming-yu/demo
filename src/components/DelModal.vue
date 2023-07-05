@@ -9,9 +9,10 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 const props = defineProps({
+  // 內層接收
   propItem: {
-    type: Object,
-    default: () => ({})
+    type: Object, // 傳進來型別為 Object
+    default: () => ({}) // 若外層無正確傳遞, 預設值回傳空物件
   }
 });
 

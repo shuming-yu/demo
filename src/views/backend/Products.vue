@@ -28,10 +28,15 @@
     <DataTable v-model:selection="selectedProduct" :value="allProducts" ref="dt" selectionMode="single" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem">
         <template #header>
             <div style="text-align: right">
-                <!-- <Button icon="pi pi-external-link" label="Export" @click="exportCSV($event)" /> -->
-                <button type="button" class="btn btn-success" @click="exportCSV($event)">{{ t("Export") }}</button>
-            </div>
+                <button type="button" class="btn btn-success mx-2" @click="exportCSV($event)">{{ t("Export") }}</button>
+                <span class="p-input-icon-left">
+                  <i class="pi pi-search" />
+                  <InputText placeholder="Search..." />
+                  <!-- <InputText v-model="filters['global'].value" placeholder="Keyword Search" /> -->
+              </span>
+              </div>
         </template>
+
         <Column field="Category" :header="t('Category')" style="width: 25%" sortable></Column>
         <Column field="Name" :header="t('Product')" style="width: 25%" sortable></Column>
         <Column field="Price" :header="t('Price')" style="width: 25%" sortable>
@@ -62,13 +67,15 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ProductModal from '../../components/ProductModal.vue';
 import DelModal from '../../components/DelModal.vue';
+import InputText from 'primevue/inputtext';
 
 export default{
   components:{
     DataTable,
     Column,
+    InputText,
     ProductModal,
-    DelModal
+    DelModal,
   },
 
   setup(){
