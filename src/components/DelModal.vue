@@ -1,25 +1,34 @@
+<i18n src="./resources/DelModal.json"></i18n>
+<!-- script setup 參考 : https://cn.vuejs.org/api/sfc-script-setup.html -->
+
 <script setup>
 import { Modal } from 'bootstrap/dist/js/bootstrap.bundle';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const props = defineProps({
+const { t } = useI18n();
 
+const props = defineProps({
+  propItem: {
+    type: Object,
+    default: () => ({})
+  }
 });
-const emits = defineEmits([]);
+
+const emits = defineEmits(['del-item']);
+function delItem(){
+  emits('del-item')
+}
+
 
 const myModal = ref(null);  // 回傳物件
 const modal = ref(null);
 
 onMounted(()=>{
   myModal.value = new Modal(modal.value);
-  console.log(myModal.value);
 })
 
-// function showModal(){
-//   myModal.value.show();
-// }
-const showModal = () => {
+function showModal(){
   myModal.value.show();
 }
 
@@ -34,49 +43,24 @@ defineExpose({
 </script>
 
 <template>
-  <div
-    class="modal fade"
-    id="delModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-    ref="modal"
-  >
-    <!-- <div class="modal-dialog" role="document">
-      <div class="modal-content border-0">
-        <div class="modal-header text-white bg-danger">
-          <h5 class="modal-title">刪除警示!!</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="modal">
+    <div class="modal-dialog modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-danger">
+          <h5 class="modal-title" id="exampleModalLabel">{{ t("Delete") + t("Product") }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body" v-if="item.Name">
-          您確定要刪除產品名稱為
-          <strong class="text-danger">{{ item.Name }}</strong> (刪除後無法復原)
+
+        <div class="modal-body" v-if="props.propItem.Name">
+          {{ t("MsgConfirmDelProduct") }} 
+          <strong class="text-danger">{{ props.propItem.Name }}</strong> {{ t("MsgCannotRecover") }}
         </div>
-        <div class="modal-body" v-else>
-          您確定要刪除此筆訂單嗎? (刪除後無法復原)
-        </div>
+
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            取消
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger"
-            @click="$emit('delProdcut')"
-          >
-            確認刪除
-          </button>
+          <button type="button" class="btn btn-primary" @click="delItem">{{ t("OK") }}</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ t("Cancel") }}</button>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>

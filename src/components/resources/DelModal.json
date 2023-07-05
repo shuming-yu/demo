@@ -1,0 +1,20 @@
+{
+  "en-US":
+  {
+    "MsgCannotRecover": "(Cannot be recovered after deletion)",
+    "MsgConfirmDelProduct": "Are you sure you want to delete the product name as",
+    "Product": "Product"
+  },
+  "zh-CN":
+  {
+    "MsgCannotRecover": "(删除后无法复原)",
+    "MsgConfirmDelProduct": "您确定要删除产品名称为",
+    "Product": "产品"
+  },
+  "zh-TW":
+  {
+    "MsgCannotRecover": "(刪除後無法復原)",
+    "MsgConfirmDelProduct": "您確定要刪除產品名稱為",
+    "Product": "產品"
+  }
+}

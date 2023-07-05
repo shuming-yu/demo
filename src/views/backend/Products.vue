@@ -29,7 +29,7 @@
         <template #header>
             <div style="text-align: right">
                 <!-- <Button icon="pi pi-external-link" label="Export" @click="exportCSV($event)" /> -->
-                <button type="button" class="btn btn-success" @click="exportCSV($event)">Export</button>
+                <button type="button" class="btn btn-success" @click="exportCSV($event)">{{ t("Export") }}</button>
             </div>
         </template>
         <Column field="Category" :header="t('Category')" style="width: 25%" sortable></Column>
@@ -50,7 +50,8 @@
   <!-- 元件的傳遞 ( props ) 不一定要加上 v-bind 也可以接受來至父層的資料，
   但沒有用 v-bind 的話，它只會接受「純文字」的形式 -->
   <DelModal ref="delModal"
-            ></DelModal>
+            :propItem="selectedProduct"
+            @del-item="delProduct"></DelModal>
 </template>
 
 <script>
@@ -80,17 +81,21 @@ export default{
     };
 
     const allProducts = ref([]);  // 商品資料
-    const selectedProduct = ref({});  // 選取的商品
     function getProducts(){
+      isLoading.value = true;
       $axios.get(webApi)
             .then(res=>{
               // console.log(res);
+              isLoading.value = false;
               allProducts.value = res.data.data;
             })
             .catch(err=>{
+              isLoading.value = false;
               console.log(err);
             })
     }
+
+    // 匯出excel功能
     const dt = ref(null); // ref="dt"
     const exportCSV = () => {
       dt.value.exportCSV();
@@ -100,9 +105,11 @@ export default{
       getProducts();
     })
 
-    const productList = ref({});  // 新增商品資料
+    const productList = ref({});
+    // 新增商品資料
     function updateProduct(item){
-      console.log(item);
+      // console.log(item);
+      isLoading.value = true;
       productList.value = item;
 
       $axios({
@@ -112,6 +119,7 @@ export default{
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then(res=>{
+          isLoading.value = false;
           $swal({
             icon: 'success',
             title: String.format(t("msgAddToCart", [ productList.value.name ]))
@@ -120,6 +128,33 @@ export default{
           getProducts();
         })
         .catch(err=>{
+          isLoading.value = false;
+          $swal({
+            icon: 'error',
+            title: err.response.data.msg,
+          });
+        })
+    }
+
+    const selectedProduct = ref({});  // 選取的商品
+    // 刪除商品
+    function delProduct(){
+      isLoading.value = true;
+      $axios.delete(webApi + "?id=" + selectedProduct.value.ID)
+        .then(res=>{
+          isLoading.value = false;
+          $swal({
+            icon: 'success',
+            title: t("Success")
+          });
+
+          selectedProduct.value = {};
+          closeDelModal();
+          getProducts();
+        })
+        .catch(err=>{
+          isLoading.value = false;
+          // console.log(err);
           $swal({
             icon: 'error',
             title: err.response.data.msg,
@@ -138,10 +173,17 @@ export default{
 
     const delModal = ref(null);
     function openDelModal(){
-      delModal.value.showModal();
+      if(!selectedProduct.value.ID){
+        $swal({
+            icon: 'error',
+            title: t("MsgPleaseSelectData")
+          });
+      }else{
+        delModal.value.showModal();
+      }
     }
     function closeDelModal(){
-      productModal.value.hideModal();
+      delModal.value.hideModal();
     }
 
     return{
@@ -155,6 +197,7 @@ export default{
       productList,
       updateProduct,
       getProducts,
+      delProduct,
       productModal,
       openModal,
       delModal,
