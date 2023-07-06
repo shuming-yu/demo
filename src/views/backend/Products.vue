@@ -25,14 +25,13 @@
             </template>
         </Column>
     </DataTable> -->
-    <DataTable v-model:selection="selectedProduct" :value="filteredProducts" ref="dt" selectionMode="single" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem">
+    <DataTable v-model:selection="selectedProduct" :value="filteredProducts" ref="dt" :exportFilename="today" selectionMode="single" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem">
         <template #header>
             <div style="text-align: right">
-                <button type="button" class="btn btn-success mx-2" @click="exportCSV($event)">{{ t("Export") }}</button>
+                <button type="button" class="btn btn-success mx-2" @click="exportCSV">{{ t("Export") }}</button>
                 <span class="p-input-icon-left">
                   <i class="pi pi-search" />
                   <InputText v-model="globalFilter" placeholder="Search..." />
-                  <!-- <InputText v-model="filters['global'].value" placeholder="Keyword Search" /> -->
               </span>
               </div>
         </template>
@@ -68,6 +67,7 @@ import Column from 'primevue/column';
 import ProductModal from '../../components/ProductModal.vue';
 import DelModal from '../../components/DelModal.vue';
 import InputText from 'primevue/inputtext';
+import moment from 'moment';
 
 export default{
   components:{
@@ -86,6 +86,7 @@ export default{
     const formatCurrency = (value) => {
       return value.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 });
     };
+    const today = "Product-" + moment().format('YYYYMMDDHHmm');
 
     const allProducts = ref([]);  // 商品資料
     function getProducts(){
@@ -104,9 +105,9 @@ export default{
 
     // 匯出excel功能
     const dt = ref(null); // ref="dt"
-    const exportCSV = () => {
+    function exportCSV(){
       dt.value.exportCSV();
-    };
+    }
 
     onMounted(()=>{
       getProducts();
@@ -195,8 +196,8 @@ export default{
 
     // filter
     const filters = reactive({});
-    const globalFilter = ref('');
-    const filteredProducts = computed(() => {
+    const globalFilter = ref(''); // 輸入的文字
+    const filteredProducts = computed(() => { // 篩選後的資料
       return allProducts.value.filter(product => {
         let matched = true;
 
@@ -207,7 +208,6 @@ export default{
             Object.values(product).some(value =>
               String(value).toLowerCase().includes(globalFilter.value.toLowerCase())
             );
-            console.log(matched);
         }
 
         // 各个列的筛选
@@ -230,6 +230,7 @@ export default{
       t,
       isLoading,
       formatCurrency,
+      today,
       allProducts,
       dt,
       exportCSV,

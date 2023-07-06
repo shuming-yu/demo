@@ -142,16 +142,29 @@ export default{
   //   }
   // },
 
+  // setup(props, context) {
+  //   // 透传 Attributes（非响应式的对象，等价于 $attrs）
+  //   console.log(context.attrs)
+
+  //   // 插槽（非响应式的对象，等价于 $slots）
+  //   console.log(context.slots)
+
+  //   // 触发事件（函数，等价于 $emit）
+  //   console.log(context.emit)
+
+  //   // 暴露公共属性（函数）
+  //   console.log(context.expose)
+  // }
 
   setup(props, { attrs, slots, emit }){
     const { t } = useI18n();
     // console.log('props:', props);
     const tempProduct = ref({});
-    // console.log(tempProduct);
 
     function pushData(){
       emit('push-data', tempProduct.value);
     }
+    
     watch(
       () => {
         tempProduct.value = props.propProduct;
@@ -165,8 +178,8 @@ export default{
     // console.log('modal:', modal);
     
     onMounted(() => {
-      // console.log('myModal:', modal.value);
       myModal.value = new Modal(modal.value);
+      // console.log('myModal:', modal.value);
       // myModal.value.show();
     })
     
