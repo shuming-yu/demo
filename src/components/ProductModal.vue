@@ -46,7 +46,7 @@
               <div class="mb-3">
                 <label for="title" class="form-label">{{ t("Product") + t("Name") }}</label>
                 <input type="text" class="form-control" id="name"
-                        v-model="tempProduct.name"
+                        v-model="tempProduct.Name"
                         :placeholder="t('MsgPleaseInput', [t('Product') + t('Name')])">
               </div>
   
@@ -54,13 +54,13 @@
                 <div class="mb-3 col-md-6">
                   <label for="category" class="form-label">{{ t("Category") }}</label>
                   <input type="text" class="form-control" id="category"
-                          v-model="tempProduct.category"
+                          v-model="tempProduct.Category"
                           :placeholder="t('MsgPleaseInput', [t('Category')])">
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="price" class="form-label">{{ t("Sku") }}</label>
                   <input type="text" class="form-control" id="sku"
-                          v-model="tempProduct.sku"
+                          v-model="tempProduct.SKU"
                           :placeholder="t('MsgPleaseInput', [t('Sku')])">
                 </div>
               </div>
@@ -69,13 +69,13 @@
                 <div class="mb-3 col-md-6">
                   <label for="origin_price" class="form-label">{{ t("Price") }}</label>
                   <input type="number" class="form-control" id="price"
-                          v-model="tempProduct.price"
+                          v-model="tempProduct.Price"
                           :placeholder="t('MsgPleaseInput', [t('Price')])">
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="price" class="form-label">{{ t("Stock") }}</label>
                   <input type="number" class="form-control" id="stock"
-                          v-model="tempProduct.stock"
+                          v-model="tempProduct.Stock"
                           :placeholder="t('MsgPleaseInput', [t('Stock')])">
                 </div>
               </div>
@@ -84,13 +84,13 @@
               <div class="mb-3">
                 <label for="description" class="form-label">{{ t("Product") + t("Description") }}</label>
                 <textarea type="text" class="form-control" id="description"
-                          v-model="tempProduct.description"
+                          v-model="tempProduct.Description"
                           :placeholder="t('MsgPleaseInput', [t('Product') + t('Description')])"></textarea>
               </div>
               <div class="mb-3">
                 <label for="description" class="form-label">{{ t("Input") + t("ImageURL") }}</label>
                 <input type="text" class="form-control" id="imageURL"
-                        v-model="tempProduct.imageURL"
+                        v-model="tempProduct.ImageURL"
                         :placeholder="t('MsgPleaseInput', [t('ImageURL')])">
               </div>
               <!-- <div class="mb-3">
@@ -101,10 +101,10 @@
               <div class="mb-3">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox"
-                          :true-value="1"
-                          :false-value="0"
+                          :true-value="true"
+                          :false-value="false"
                           id="enabled"
-                          v-model="tempProduct.enabled">
+                          v-model="tempProduct.Is_enabled">
                   <label class="form-check-label" for="enabled">
                     {{ t("IsEnabled") }}
                   </label>

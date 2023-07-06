@@ -3,12 +3,18 @@
 <template>
   <Loading :active="isLoading"></Loading>
   <div class="m-3 text-end">
-    <button class="btn btn-primary mx-1" type="button" @click="openModal">
+    <Button class="me-2" severity="info" size="small" @click="openModal(true)">
+      <i class="me-2 pi pi-plus"></i>
       {{ t("Add") + t("Product") }}
-    </button>
-    <button class="btn btn-danger" type="button" @click="openDelModal">
+    </Button>
+    <Button class="me-2" severity="warning" size="small" @click="openModal(false)">
+      <i class="me-2 pi pi-pencil"></i>
+      {{ t("Modify") }}
+    </Button>
+    <Button class="me-2" severity="danger" size="small" @click="openDelModal">
+      <i class="me-2 pi pi-trash"></i>
       {{ t("Delete") }}
-    </button>
+    </Button>
   </div>
 
   <div class="m-3 card">
@@ -25,15 +31,18 @@
             </template>
         </Column>
     </DataTable> -->
-    <DataTable v-model:selection="selectedProduct" :value="filteredProducts" ref="dt" :exportFilename="today" selectionMode="single" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem">
+    <DataTable v-model:selection="selectedProduct" :value="filteredProducts" ref="dt" :exportFilename="today" selectionMode="single" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem" stripedRows removableSort>
         <template #header>
             <div style="text-align: right">
-                <button type="button" class="btn btn-success mx-2" @click="exportCSV">{{ t("Export") }}</button>
-                <span class="p-input-icon-left">
-                  <i class="pi pi-search" />
-                  <InputText v-model="globalFilter" placeholder="Search..." />
+              <Button class="me-2" severity="success" size="small" @click="exportCSV">
+                <i class="me-2 pi pi-download"></i>
+                {{ t("Export") }}
+              </Button>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                <InputText v-model="globalFilter" placeholder="Search..." />
               </span>
-              </div>
+            </div>
         </template>
 
         <Column field="Category" :header="t('Category')" style="width: 25%" sortable></Column>
@@ -43,7 +52,11 @@
               {{ formatCurrency(slotProps.data.Price) }}
           </template>
         </Column>
-        <Column field="Is_enabled" :header="t('IsEnabled')" style="width: 25%"></Column>
+        <Column field="Is_enabled" :header="t('IsEnabled')" style="width: 25%">
+          <template #body="slotProps">
+            <TriStateCheckbox v-model="slotProps.data.Is_enabled" disabled />
+          </template>
+        </Column>
     </DataTable>
   </div>
 
@@ -67,6 +80,8 @@ import Column from 'primevue/column';
 import ProductModal from '../../components/ProductModal.vue';
 import DelModal from '../../components/DelModal.vue';
 import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import TriStateCheckbox from 'primevue/tristatecheckbox';
 import moment from 'moment';
 
 export default{
@@ -74,6 +89,8 @@ export default{
     DataTable,
     Column,
     InputText,
+    Button,
+    TriStateCheckbox,
     ProductModal,
     DelModal,
   },
@@ -88,7 +105,17 @@ export default{
     };
     const today = "Product-" + moment().format('YYYYMMDDHHmm');
 
-    const allProducts = ref([]);  // 商品資料
+
+    const allProducts = ref([]);  // 全部商品資料
+    const isNew = ref(null);  // true: 新增 / false: 修改
+    const productList = ref({});  // 送出商品資料
+    const selectedProduct = ref({});  // 選取的商品
+    const dt = ref(null); // ref="dt"
+    const productModal = ref(null); // ref="productModal"
+    const delModal = ref(null); // ref="delModal"
+
+
+    // 取得全部商品資料
     function getProducts(){
       isLoading.value = true;
       $axios.get(webApi)
@@ -103,28 +130,56 @@ export default{
             })
     }
 
-    // 匯出excel功能
-    const dt = ref(null); // ref="dt"
-    function exportCSV(){
-      dt.value.exportCSV();
-    }
-
     onMounted(()=>{
       getProducts();
     })
 
-    const productList = ref({});
-    // 新增商品資料
+    // 匯出excel功能
+    function exportCSV(){
+      dt.value.exportCSV();
+    }
+
+    // Modal
+    function openModal(status){
+      isNew.value = status;
+
+      if(status){
+        productList.value = {}; // 清空欄位
+      }else{
+        if(!selectedProduct.value.ID){
+          $swal({
+              icon: 'error',
+              title: t("MsgPleaseSelectData")
+            });
+            return;
+        }else{
+          productList.value = { ...selectedProduct.value };
+        }
+      }
+
+      productModal.value.showModal();
+    }
+    function closeModal(){
+      productModal.value.hideModal();
+    }
+
+    // 新增/修改 商品資料
     function updateProduct(item){
-      // console.log(item);
+      console.log('item:', item);
       isLoading.value = true;
+      console.log(productList.value);
       productList.value = item;
+      console.log('productList.value:', productList.value);
+      let httpMethod = 'post';
+      if(!isNew.value){
+        httpMethod = 'put';
+      }
 
       $axios({
-        method: "post",
+        method: httpMethod,
         url: webApi,
-        data: productList.value,
         headers: { "Content-Type": "multipart/form-data" },
+        data: productList.value,
       })
         .then(res=>{
           isLoading.value = false;
@@ -144,7 +199,20 @@ export default{
         })
     }
 
-    const selectedProduct = ref({});  // 選取的商品
+    function openDelModal(){
+      if(!selectedProduct.value.ID){
+        $swal({
+            icon: 'error',
+            title: t("MsgPleaseSelectData")
+          });
+      }else{
+        delModal.value.showModal();
+      }
+    }
+    function closeDelModal(){
+      delModal.value.hideModal();
+    }
+    
     // 刪除商品
     function delProduct(){
       isLoading.value = true;
@@ -170,29 +238,7 @@ export default{
         })
     }
 
-    // modal
-    const productModal = ref(null);
-    function openModal(){
-      productModal.value.showModal();
-    }
-    function closeModal(){
-      productModal.value.hideModal();
-    }
 
-    const delModal = ref(null);
-    function openDelModal(){
-      if(!selectedProduct.value.ID){
-        $swal({
-            icon: 'error',
-            title: t("MsgPleaseSelectData")
-          });
-      }else{
-        delModal.value.showModal();
-      }
-    }
-    function closeDelModal(){
-      delModal.value.hideModal();
-    }
 
     // filter
     const filters = reactive({});
@@ -235,6 +281,7 @@ export default{
       dt,
       exportCSV,
       selectedProduct,
+      isNew,
       productList,
       updateProduct,
       getProducts,
