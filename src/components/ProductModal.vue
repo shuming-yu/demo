@@ -101,10 +101,8 @@
               <div class="mb-3">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox"
-                          :true-value="true"
-                          :false-value="false"
                           id="enabled"
-                          v-model="tempProduct.Is_enabled">
+                          v-model="tempProduct.Enabled">
                   <label class="form-check-label" for="enabled">
                     {{ t("IsEnabled") }}
                   </label>

@@ -52,9 +52,9 @@
               {{ formatCurrency(slotProps.data.Price) }}
           </template>
         </Column>
-        <Column field="Is_enabled" :header="t('IsEnabled')" style="width: 25%">
+        <Column field="Enabled" :header="t('Enabled')" style="width: 25%">
           <template #body="slotProps">
-            <TriStateCheckbox v-model="slotProps.data.Is_enabled" disabled />
+            <TriStateCheckbox v-model="slotProps.data.Enabled" disabled />
           </template>
         </Column>
     </DataTable>
@@ -120,7 +120,7 @@ export default{
       isLoading.value = true;
       $axios.get(webApi)
             .then(res=>{
-              // console.log(res);
+              console.log(res);
               isLoading.value = false;
               allProducts.value = res.data.data;
             })
@@ -153,7 +153,7 @@ export default{
             });
             return;
         }else{
-          productList.value = { ...selectedProduct.value };
+          productList.value = selectedProduct.value;
         }
       }
 
@@ -165,12 +165,12 @@ export default{
 
     // 新增/修改 商品資料
     function updateProduct(item){
-      console.log('item:', item);
+      // console.log('item:', item);
       isLoading.value = true;
-      console.log(productList.value);
       productList.value = item;
-      console.log('productList.value:', productList.value);
+      // console.log('productList.value:', productList.value);
       let httpMethod = 'post';
+      // 若為 false 則 put
       if(!isNew.value){
         httpMethod = 'put';
       }
@@ -185,7 +185,8 @@ export default{
           isLoading.value = false;
           $swal({
             icon: 'success',
-            title: String.format(t("msgAddToCart", [ productList.value.name ]))
+            // title: String.format(t("msgAddToCart", [ productList.value.name ]))
+            title: t("Success")
           });
           closeModal();
           getProducts();
