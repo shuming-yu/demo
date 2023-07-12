@@ -153,7 +153,7 @@ export default{
             });
             return;
         }else{
-          productList.value = selectedProduct.value;
+          productList.value = {  ...selectedProduct.value };  // 淺層拷貝
         }
       }
 
@@ -165,10 +165,8 @@ export default{
 
     // 新增/修改 商品資料
     function updateProduct(item){
-      // console.log('item:', item);
       isLoading.value = true;
       productList.value = item;
-      // console.log('productList.value:', productList.value);
       let httpMethod = 'post';
       // 若為 false 則 put
       if(!isNew.value){
