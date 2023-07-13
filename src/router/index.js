@@ -16,9 +16,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/test',
-    name: 'test',
-    component: () => import(/* webpackChunkName: "about" */ '../views/test.vue')
+    path: '/nav',
+    name: 'nav',
+    component: () => import(/* webpackChunkName: "about" */ '../views/nav.vue')
   },
   {
     path: '/login',
@@ -44,7 +44,14 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // console.log('to', to);  // 到達哪個頁面
+    // console.log('from', from);  // 從哪個頁面來
+    // console.log('savedPosition', savedPosition);  // 畫面位置資訊
+    // `to` 和 `from` 都是路由地址
+    // `savedPosition` 可以為空，如果沒有的話。
+  },
 })
 
 export default router
