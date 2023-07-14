@@ -26,11 +26,11 @@
 </template> -->
 <template>
   <Sidebar v-model:visible="visible" :full-screen="true">
-    <PanelMenu :model="menuItems" @item-click="onMenuItemSelect"></PanelMenu>
+    <PanelMenu :model="panelMenuItems" @click="onMenuItemSelect"></PanelMenu>
   </Sidebar>
 
   <div class="card relative z-2" style="border: none;">
-      <Menubar class="custom-menubar" :model="items">
+      <Menubar class="custom-menubar" :model="menubarItems">
         <template #start>
           <!-- <img alt="logo" src="https://primefaces.org/cdn/primevue/images/logo.svg" height="40" class="mr-2" /> -->
           <Button class="mx-2" icon="pi pi-ellipsis-v" severity="secondary" text raised rounded aria-label="Ellipsis" @click="visible = true" />
@@ -53,47 +53,69 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const visible = ref(false);
-const menuItems = ref([
+const panelMenuItems = ref([
   {
     label: '主頁',
     icon: 'pi pi-home',
     to: '/dashboard'
   },
   {
-    label: '使用者管理',
-    icon: 'pi pi-users',
-    items: [
-      {
-        label: '新增使用者',
-        icon: 'pi pi-plus',
-        to: '/users/add'
-      },
-      {
-        label: '使用者列表',
-        icon: 'pi pi-list',
-        to: '/users/list'
-      }
-    ]
+    label: '商品管理',
+    icon: 'pi pi-globe',
+    to: '/dashboard/products'
+    // items: [
+    //   {
+    //     label: '新增國家',
+    //     icon: 'pi pi-plus',
+    //     to: '/countries/add'
+    //   },
+    //   {
+    //     label: '國家列表',
+    //     icon: 'pi pi-list',
+    //     to: '/countries/list'
+    //   }
+    // ]
   },
   {
-    label: '國家管理',
-    icon: 'pi pi-globe',
-    items: [
-      {
-        label: '新增國家',
-        icon: 'pi pi-plus',
-        to: '/countries/add'
-      },
-      {
-        label: '國家列表',
-        icon: 'pi pi-list',
-        to: '/countries/list'
-      }
-    ]
+    label: '訂單資訊',
+    icon: 'pi pi-shopping-cart',
+    // items: [
+    //   {
+    //     label: '新增使用者',
+    //     icon: 'pi pi-plus',
+    //     to: '/users/add'
+    //   },
+    //   {
+    //     label: '使用者列表',
+    //     icon: 'pi pi-list',
+    //     to: '/users/list'
+    //   }
+    // ]
+  },
+  {
+    label: '使用者管理',
+    icon: 'pi pi-users',
+    // items: [
+    //   {
+    //     label: '新增使用者',
+    //     icon: 'pi pi-plus',
+    //     to: '/users/add'
+    //   },
+    //   {
+    //     label: '使用者列表',
+    //     icon: 'pi pi-list',
+    //     to: '/users/list'
+    //   }
+    // ]
+  },
+  {
+    label: '登出',
+    icon: 'pi pi-sign-out',
+    to: '/login'
   }
 ])
 
-const items = ref([
+const menubarItems = ref([
   {
     label: 'Home',
     icon: 'pi pi-fw pi-home',
@@ -151,36 +173,36 @@ const items = ref([
   {
     label: 'Users',
     icon: 'pi pi-fw pi-user',
-    items: [
-        {
-            label: 'New',
-            icon: 'pi pi-fw pi-user-plus'
-        },
-        {
-            label: 'Delete',
-            icon: 'pi pi-fw pi-user-minus'
-        },
-        {
-            label: 'Search',
-            icon: 'pi pi-fw pi-users',
-            items: [
-                {
-                    label: 'Filter',
-                    icon: 'pi pi-fw pi-filter',
-                    items: [
-                        {
-                            label: 'Print',
-                            icon: 'pi pi-fw pi-print'
-                        }
-                    ]
-                },
-                {
-                    label: 'List',
-                    icon: 'pi pi-fw pi-bars'
-                }
-            ]
-        }
-    ]
+    // items: [
+    //     {
+    //         label: 'New',
+    //         icon: 'pi pi-fw pi-user-plus'
+    //     },
+    //     {
+    //         label: 'Delete',
+    //         icon: 'pi pi-fw pi-user-minus'
+    //     },
+    //     {
+    //         label: 'Search',
+    //         icon: 'pi pi-fw pi-users',
+    //         items: [
+    //             {
+    //                 label: 'Filter',
+    //                 icon: 'pi pi-fw pi-filter',
+    //                 items: [
+    //                     {
+    //                         label: 'Print',
+    //                         icon: 'pi pi-fw pi-print'
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 label: 'List',
+    //                 icon: 'pi pi-fw pi-bars'
+    //             }
+    //         ]
+    //     }
+    // ]
   },
   // {
   //   label: 'Events',
@@ -218,6 +240,10 @@ const items = ref([
       to: '/login'
   }
 ]);
+
+function onMenuItemSelect(){
+  visible.value = false;
+}
 
 
 watch(

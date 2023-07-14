@@ -62,7 +62,6 @@
 
   <ProductModal ref="productModal"
                 :propProduct="productList"
-                num="1"
                 @push-data="updateProduct"></ProductModal>
   <!-- 元件的傳遞 ( props ) 不一定要加上 v-bind 也可以接受來至父層的資料，
   但沒有用 v-bind 的話，它只會接受「純文字」的形式 -->

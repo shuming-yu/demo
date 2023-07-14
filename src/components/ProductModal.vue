@@ -130,7 +130,7 @@ import { useI18n } from 'vue-i18n';
 
 export default{
   // 基礎版
-  props: ['propProduct', 'num'],
+  props: ['propProduct'],
   emits: ['push-data'],
   // 詳細版
   // props: {
