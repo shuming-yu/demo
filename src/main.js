@@ -27,7 +27,8 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 import PanelMenu from 'primevue/panelmenu';
 import Sidebar from 'primevue/sidebar';
 import Menubar from 'primevue/menubar';
-
+import Card from 'primevue/card';
+import TieredMenu from 'primevue/tieredmenu';
 
 //  init
 const app = createApp(App);
@@ -63,5 +64,7 @@ app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('PanelMenu', PanelMenu);
 app.component('Sidebar', Sidebar);
 app.component('Menubar', Menubar);
+app.component('Card', Card);
+app.component('TieredMenu', TieredMenu);
 
 app.mount('#app');
