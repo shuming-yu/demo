@@ -72,24 +72,12 @@
 
 <script>
 import { reactive, ref, computed, onMounted, inject } from 'vue';
-import $axios from 'axios';
 import { useI18n } from 'vue-i18n';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
 import ProductModal from '../../components/ProductModal.vue';
 import DelModal from '../../components/DelModal.vue';
-import InputText from 'primevue/inputtext';
-import Button from 'primevue/button';
-import TriStateCheckbox from 'primevue/tristatecheckbox';
-import moment from 'moment';
 
 export default{
   components:{
-    DataTable,
-    Column,
-    InputText,
-    Button,
-    TriStateCheckbox,
     ProductModal,
     DelModal,
   },

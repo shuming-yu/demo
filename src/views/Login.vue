@@ -45,7 +45,6 @@
 
 <script setup>
 import { ref, reactive, inject } from 'vue';
-import $axios from 'axios';
 import router from '@/router';
 
 const $swal = inject('$swal');

@@ -22,15 +22,25 @@ const routes = [
   },
   {
     path: '/login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+    component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/userboard',
+    component: () => import('../views/Userboard.vue'),
+    children: [
+      {
+        path: 'cart',
+        component: () => import('../views/UserCart.vue')
+      }
+    ]
   },
   {
     path: '/dashboard',
-    component: () => import(/* webpackChunkName: "about" */ '../views/backend/Dashboard.vue'),
-    children:[
+    component: () => import('../views/backend/Dashboard.vue'),
+    children: [
       {
         path: 'products',
-        component: () => import(/* webpackChunkName: "about" */ '../views/backend/Products.vue')
+        component: () => import('../views/backend/Products.vue')
       }
     ]
   },

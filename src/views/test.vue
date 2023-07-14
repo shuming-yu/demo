@@ -15,16 +15,8 @@
 
 <script>
 import { ref, computed, reactive } from 'vue';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import InputText from 'primevue/inputtext';
 
 export default {
-  components: {
-    DataTable,
-    Column,
-    InputText
-  },
   setup() {
     const products = reactive([
       { name: '产品 A', category: '分类 A', price: 10, stock: 100 },

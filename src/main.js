@@ -8,16 +8,26 @@ import Loading from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import moment from 'moment/moment';
+
+import './methods/ExPrototype';
+import './assets/all.scss';
+
 import PrimeVue from 'primevue/config';
 import "primevue/resources/themes/lara-light-indigo/theme.css";     
 import "primevue/resources/primevue.min.css";
 import 'primeicons/primeicons.css';
-import moment from 'moment/moment';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import TriStateCheckbox from 'primevue/tristatecheckbox';
+import PanelMenu from 'primevue/panelmenu';
+import Sidebar from 'primevue/sidebar';
+import Menubar from 'primevue/menubar';
 
-import './methods/ExPrototype';
-import './assets/all.scss';
 
 //  init
 const app = createApp(App);
@@ -30,17 +40,28 @@ const options = {
   timer: 1500,
 };
 
+window.moment = moment;
+window.$axios = axios;
+
 // use : 安裝插件
 app.use(router);
 app.use(i18n);
 app.use(VueAxios, axios);
-// app.provide('axios', app.config.globalProperties.axios);
 app.use(VueSweetalert2, options);
 app.use(PrimeVue);
 app.use(ToastService);
 
 // component : 註冊全局組件
 app.component('Loading', Loading);
+
 app.component('Toast', Toast);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('InputText', InputText);
+app.component('Button', Button);
+app.component('TriStateCheckbox', TriStateCheckbox);
+app.component('PanelMenu', PanelMenu);
+app.component('Sidebar', Sidebar);
+app.component('Menubar', Menubar);
 
 app.mount('#app');

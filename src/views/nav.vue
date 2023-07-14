@@ -39,10 +39,6 @@
 </template>
 
 <script setup>
-import Sidebar from 'primevue/sidebar';
-import PanelMenu from 'primevue/panelmenu';
-import Menubar from 'primevue/menubar';
-import Button from 'primevue/button';
 import { ref } from "vue";
 
 const visible = ref(true);

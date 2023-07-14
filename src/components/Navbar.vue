@@ -43,11 +43,6 @@
 </template>
 
 <script setup>
-import PanelMenu from 'primevue/panelmenu';
-import Sidebar from 'primevue/sidebar';
-import Menubar from 'primevue/menubar';
-import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
