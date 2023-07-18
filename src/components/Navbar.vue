@@ -26,7 +26,7 @@
 </template> -->
 <template>
   <Sidebar v-model:visible="visible" :full-screen="true">
-    <PanelMenu :model="panelMenuItems" @click="onMenuItemSelect"></PanelMenu>
+    <PanelMenu :model="panelMenuItems"></PanelMenu>
   </Sidebar>
 
   <div class="card relative z-2" style="border: none;">
@@ -44,8 +44,8 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-const route = useRoute();
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const visible = ref(false);
 const panelMenuItems = ref([
@@ -78,7 +78,7 @@ const panelMenuItems = ref([
     //   {
     //     label: '新增使用者',
     //     icon: 'pi pi-plus',
-    //     to: '/users/add'
+    //     to: '/nav'
     //   },
     //   {
     //     label: '使用者列表',
@@ -236,19 +236,10 @@ const menubarItems = ref([
   }
 ]);
 
-function onMenuItemSelect(){
+// 在路由切換完成後隱藏 Sidebar
+router.afterEach(() => {
   visible.value = false;
-}
-
-
-watch(
-  () => route.currentRoute,
-        (to, from) => {
-          // 在切換頁面後執行的操作
-          // 可以根據需要執行任何自訂的邏輯或操作
-          visible.value = false;
-        }
-)
+});
 </script>
 
 <style>

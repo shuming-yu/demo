@@ -8,47 +8,37 @@
       </div>
     </div>
     <div class="col-9">
-      <div class="row">
-        <div class="col-md-4" v-for="item in allProducts" :key="item.ID">
-            <!-- <Card style="width: 25em">
-              <template #header>
-                <img alt="image" src="https://primefaces.org/cdn/primevue/images/usercard.png" style="max-width: 100%;" />
-              </template>
-              <template #title>{{ item.Name }}</template>
-              <template #subtitle>{{ item.Category }}</template>
-              <template #content>
-                <p>{{ item.Description }}</p>
-              </template>
-              <template #footer>
-                <div class="d-flex justify-content-between">
-                  <Button icon="pi pi-search" label="詳細資料" severity="secondary" outlined rounded raised />
-                  <Button icon="pi pi-shopping-cart" label="加入購物車" severity="info" rounded raised />
-                </div>
-              </template>
-            </Card> -->
-            <!-- onerror="this.src='./img/img404.png'" -->
-            <div class="card ">
-              <img :src="item.ImageURL" class="card-img-top" :alt="item.Name" @error="handleImageError">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" v-for="item in allProducts" :key="item.ID">
+          <div class="card h-100 image-container">
+            <img :src="item.ImageURL" class="card-img-top" :alt="item.Name" @error="handleImageError">
+            <div class="text-overlay">
               <div class="card-body">
-                  <h5 class="card-title">{{ item.Name }}<span class="badge badge-light float-right text-muted">{{ item.Category }}</span></h5>
-                  <p class="card-text">{{ truncatedDescription(item.Description) }}</p>
-                  <div class="d-flex justify-content-between align-items-baseline">
-                      <!-- <del class="h6">{{ item.origin_price | currency }}元</del>
-                      <div class="h5">{{ item.price | currency }}元</div> -->
-                      <del class="h6">1000元</del>
-                      <div class="h5">{{ item.Price | 100 }}元</div>
-                  </div>
+                <h5 class="card-title d-flex justify-content-between">
+                  <span class="badge text-dark bg-light">{{ item.Name }}</span>
+                  <!-- <span class="badge text-dark bg-light">{{ item.Name }}</span> -->
+                  <span class="badge text-white bg-danger">{{ item.Category }}</span>
+                </h5>
+                <p class="card-text">{{ truncatedDescription(item.Description) }}</p>
+                <div class="d-flex justify-content-between align-items-baseline">
+                    <!-- <del class="h6">{{ item.origin_price | currency }}元</del>
+                    <div class="h5">{{ item.price | currency }}元</div> -->
+                    <del class="h6">1000元</del>
+                    <div class="h5">{{ item.Price | 100 }}元</div>
+                </div>
               </div>
               <div class="card-footer d-flex justify-content-between">
-                  <!-- <router-link :to="{path: `lesson/${item.id}`}" class="btn btn-outline-primary">詳細資料</router-link>
-                  <a href="#" @click.prevent="addToCart({ id: item.id })" class="btn btn-primary">加入購物車</a> -->
-
-                  <button type="button" class="btn btn-outline-secondary">詳細資料</button>
-                  <button type="button" class="btn btn-info">加入購物車</button>
+                <!-- <router-link :to="{path: `lesson/${item.id}`}" class="btn btn-outline-primary">詳細資料</router-link>
+                <a href="#" @click.prevent="addToCart({ id: item.id })" class="btn btn-primary">加入購物車</a> -->
+  
+                <button type="button" class="btn btn-outline-secondary">詳細資料</button>
+                <button type="button" class="btn btn-info">加入購物車</button>
               </div>
             </div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -137,6 +127,26 @@ const first = computed(()=>{
   })
 });
 
-console.log(first);
-
 </script>
+
+<style>
+.image-container {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.image-container img {
+  transition: transform 0.3s ease;
+}
+
+.image-container:hover img {
+  transform: scale(1.2);
+  z-index: 1;
+}
+
+.image-container .text-overlay {
+  position: relative;
+  z-index: 2;
+}
+</style>
