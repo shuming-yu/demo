@@ -10,6 +10,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import moment from 'moment/moment';
 
+
+
 import './methods/ExPrototype';
 import './assets/all.scss';
 
@@ -29,6 +31,10 @@ import Sidebar from 'primevue/sidebar';
 import Menubar from 'primevue/menubar';
 import Card from 'primevue/card';
 import TieredMenu from 'primevue/tieredmenu';
+import TabMenu from 'primevue/tabmenu';
+import DataView from 'primevue/dataview';
+import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
+import 'primeflex/primeflex.css';
 
 //  init
 const app = createApp(App);
@@ -66,5 +72,8 @@ app.component('Sidebar', Sidebar);
 app.component('Menubar', Menubar);
 app.component('Card', Card);
 app.component('TieredMenu', TieredMenu);
+app.component('TabMenu', TabMenu);
+app.component('DataView', DataView);
+app.component('DataViewLayoutOptions', DataViewLayoutOptions);
 
 app.mount('#app');
