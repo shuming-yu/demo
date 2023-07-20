@@ -11,3 +11,6 @@
 
 // 4. Include any optional Bootstrap CSS as needed
 @import "~bootstrap/scss/bootstrap"; // 目前載入所有的元件，可以自行調整成載入部分項目
+
+@import './header';
+@import './utilities';
