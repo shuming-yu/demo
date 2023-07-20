@@ -35,6 +35,7 @@ import TabMenu from 'primevue/tabmenu';
 import DataView from 'primevue/dataview';
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
 import 'primeflex/primeflex.css';
+import ScrollTop from 'primevue/scrolltop';
 
 //  init
 const app = createApp(App);
@@ -75,5 +76,6 @@ app.component('TieredMenu', TieredMenu);
 app.component('TabMenu', TabMenu);
 app.component('DataView', DataView);
 app.component('DataViewLayoutOptions', DataViewLayoutOptions);
+app.component('ScrollTop', ScrollTop);
 
 app.mount('#app');

@@ -1,0 +1,1 @@
+.image-container{width:100%;position:relative;display:inline-block;overflow:hidden}.image-container img{transition:transform .3s ease}.image-container:hover img{transform:scale(1.2);z-index:1}.image-container .text-overlay{position:relative;z-index:2}.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus{box-shadow:none!important}
