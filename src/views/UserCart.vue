@@ -1,10 +1,42 @@
 <template>
-  <Loading :active="isLoading"></Loading>
   <ScrollTop />
+
   <div class="p-5">
     <TabMenu :model="tabMenuItems" @click="handleTabClick" />
 
-    <div class="row row-cols-1 row-cols-md-3 g-4 p-5">
+    <div v-if="isLoading" class="row row-cols-1 row-cols-md-3 g-4 p-5">
+      <!-- 顯示 Skeleton 效果 -->
+      <div class="col-3" v-for="i in 4" :key="i">
+        <div class="card border-dark h-100">
+          <div class="p-skeleton-card" style="width: 100%; height: 450px;">
+            <Skeleton width="100%" height="150px"></Skeleton>
+            <div class="flex justify-content-between align-items-baseline p-3">
+                <Skeleton width="7rem" height="2.5rem" class="mt-2"></Skeleton>
+                <Skeleton width="4rem" height="2rem"></Skeleton>
+            </div>
+            <div class="p-3">
+              <Skeleton width="5rem" class="mb-2"></Skeleton>
+              <Skeleton width="10rem" class="mb-2"></Skeleton>
+              <Skeleton width="15rem" class="mb-2"></Skeleton>
+            </div>
+            <div class="flex justify-content-between align-items-baseline pb-2 px-3">
+                <Skeleton width="4rem" height="2rem" class="mt-2"></Skeleton>
+                <Skeleton width="4rem" height="2rem"></Skeleton>
+            </div>
+            <hr style="margin: 0;">
+            <div class="flex justify-content-between align-items-baseline p-3">
+              <Skeleton width="7rem" height="2rem"></Skeleton>
+              <div class="flex justify-content-between">
+                <Skeleton width="2rem" height="2rem" class="mx-1"></Skeleton>
+                <Skeleton width="2rem" height="2rem"></Skeleton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-else class="row row-cols-1 row-cols-md-3 g-4 p-5">
       <div class="col-3" v-for="item in filteredProducts" :key="item.ID">
         <div class="card border-dark h-100 image-container background-image">
           <img :src="item.ImageURL" class="card-img-top" :alt="item.Name" @error="handleImageError">
