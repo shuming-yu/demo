@@ -6,7 +6,9 @@
     <div class="loginbox container mt-5">
       <form class="form" @submit.prevent="register">
         <!-- <div class="col-md-6"> -->
-        <h2 class="mb-3" style="text-align: center">{{ $t("BackendSystem") }}</h2>
+        <h2 class="mb-3" style="text-align: center">
+          {{ $t("BackendSystem") }}
+        </h2>
         <div class="group mb-2">
           <label for="inputEmail" class="sr-only">Name</label>
           <input
@@ -15,7 +17,7 @@
             class="form-control"
             required
             autofocus
-            v-model="user.Name"
+            v-model.trim="user.Name"
           />
         </div>
         <div class="group mb-2">
@@ -25,7 +27,7 @@
             id="inputPassword"
             class="form-control"
             required
-            v-model="user.Password"
+            v-model.trim="user.Password"
           />
         </div>
 
@@ -44,36 +46,36 @@
 </template>
 
 <script setup>
-import { ref, reactive, inject } from 'vue';
-import router from '@/router';
+import { ref, reactive, inject } from "vue";
+import router from "@/router";
 
-const $swal = inject('$swal');
+const $swal = inject("$swal");
 const isLoading = ref(null);
 const webApi = `${process.env.VUE_APP_WebAPI}/login`;
 const user = reactive({
   Name: "",
-  Password: ""
+  Password: "",
 });
 
-function singIn(){
+function singIn() {
   isLoading.value = true;
   $axios({
-    method: 'post',
+    method: "post",
     url: webApi,
     headers: { "Content-Type": "multipart/form-data" },
     data: user,
   })
-    .then(res=>{
+    .then((res) => {
       isLoading.value = false;
       router.push("/dashboard/products");
     })
-    .catch(err=>{
+    .catch((err) => {
       isLoading.value = false;
       $swal({
-        icon: 'error',
+        icon: "error",
         title: err.response.data.errmsg,
       });
-    })
+    });
 }
 </script>
 

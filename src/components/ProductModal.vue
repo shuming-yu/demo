@@ -1,15 +1,26 @@
 <i18n src="./resources/ProductModal.json"></i18n>
 
 <template>
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+    ref="modal"
+  >
     <div class="modal-dialog modal-xl" role="document" ref="modal">
       <div class="modal-content border-0">
         <div class="modal-header bg-dark text-white">
           <h5 class="modal-title" id="exampleModalLabel">
             <span>{{ t("Add") + t("Product") }}</span>
           </h5>
-          <button type="button" class="btn-close btn-close-white"
-                  data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -44,54 +55,102 @@
             </div> -->
             <div class="col-12">
               <div class="mb-3">
-                <label for="title" class="form-label">{{ t("Product") + t("Name") }}</label>
-                <input type="text" class="form-control" id="name"
-                        v-model="tempProduct.Name"
-                        :placeholder="t('MsgPleaseInput', [t('Product') + t('Name')])">
+                <label for="title" class="form-label">{{
+                  t("Product") + t("Name")
+                }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  v-model="tempProduct.Name"
+                  :placeholder="t('MsgPleaseInput', [t('Product') + t('Name')])"
+                />
               </div>
-  
+
               <div class="row gx-2">
                 <div class="mb-3 col-md-6">
-                  <label for="category" class="form-label">{{ t("Category") }}</label>
-                  <input type="text" class="form-control" id="category"
-                          v-model="tempProduct.Category"
-                          :placeholder="t('MsgPleaseInput', [t('Category')])">
+                  <label for="category" class="form-label">{{
+                    t("Category")
+                  }}</label>
+                  <!-- <input
+                    type="text"
+                    class="form-control"
+                    id="category"
+                    v-model="tempProduct.Category"
+                    :placeholder="t('MsgPleaseInput', [t('Category')])"
+                  /> -->
+
+                  <Dropdown
+                    v-model="tempProduct.Category"
+                    :options="categoryItems"
+                    :optionLabel="name"
+                    :placeholder="t('MsgPleaseInput', [t('Category')])"
+                    class="w-full md:w-14rem"
+                  />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="price" class="form-label">{{ t("Sku") }}</label>
-                  <input type="text" class="form-control" id="sku"
-                          v-model="tempProduct.SKU"
-                          :placeholder="t('MsgPleaseInput', [t('Sku')])">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="sku"
+                    v-model="tempProduct.SKU"
+                    :placeholder="t('MsgPleaseInput', [t('Sku')])"
+                  />
                 </div>
               </div>
-  
+
               <div class="row gx-2">
                 <div class="mb-3 col-md-6">
-                  <label for="origin_price" class="form-label">{{ t("Price") }}</label>
-                  <input type="number" class="form-control" id="price"
-                          v-model="tempProduct.Price"
-                          :placeholder="t('MsgPleaseInput', [t('Price')])">
+                  <label for="origin_price" class="form-label">{{
+                    t("Price")
+                  }}</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="price"
+                    v-model="tempProduct.Price"
+                    :placeholder="t('MsgPleaseInput', [t('Price')])"
+                  />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="price" class="form-label">{{ t("Stock") }}</label>
-                  <input type="number" class="form-control" id="stock"
-                          v-model="tempProduct.Stock"
-                          :placeholder="t('MsgPleaseInput', [t('Stock')])">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="stock"
+                    v-model="tempProduct.Stock"
+                    :placeholder="t('MsgPleaseInput', [t('Stock')])"
+                  />
                 </div>
               </div>
-              <hr>
-  
+              <hr />
+
               <div class="mb-3">
-                <label for="description" class="form-label">{{ t("Product") + t("Description") }}</label>
-                <textarea type="text" class="form-control" id="description"
-                          v-model="tempProduct.Description"
-                          :placeholder="t('MsgPleaseInput', [t('Product') + t('Description')])"></textarea>
+                <label for="description" class="form-label">{{
+                  t("Product") + t("Description")
+                }}</label>
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  v-model="tempProduct.Description"
+                  :placeholder="
+                    t('MsgPleaseInput', [t('Product') + t('Description')])
+                  "
+                ></textarea>
               </div>
               <div class="mb-3">
-                <label for="description" class="form-label">{{ t("Input") + t("ImageURL") }}</label>
-                <input type="text" class="form-control" id="imageURL"
-                        v-model="tempProduct.ImageURL"
-                        :placeholder="t('MsgPleaseInput', [t('ImageURL')])">
+                <label for="description" class="form-label">{{
+                  t("Input") + t("ImageURL")
+                }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="imageURL"
+                  v-model="tempProduct.ImageURL"
+                  :placeholder="t('MsgPleaseInput', [t('ImageURL')])"
+                />
               </div>
               <!-- <div class="mb-3">
                 <label for="content" class="form-label">說明內容</label>
@@ -100,9 +159,12 @@
               </div> -->
               <div class="mb-3">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox"
-                          id="enabled"
-                          v-model="tempProduct.Enabled">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="enabled"
+                    v-model="tempProduct.Enabled"
+                  />
                   <label class="form-check-label" for="enabled">
                     {{ t("IsEnabled") }}
                   </label>
@@ -112,26 +174,36 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="pushData">{{ t("OK") }}</button>
-          <button type="button" class="btn btn-outline-secondary"
-                  data-bs-dismiss="modal">{{ t("Cancel") }}
+          <button type="button" class="btn btn-primary" @click="pushData">
+            {{ t("OK") }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            data-bs-dismiss="modal"
+          >
+            {{ t("Cancel") }}
           </button>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
-import Modal from 'bootstrap/js/dist/modal';
-import { ref, onMounted, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
+import Modal from "bootstrap/js/dist/modal";
+import { ref, onMounted, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import Dropdown from "primevue/dropdown";
 
-export default{
+export default {
+  components: {
+    Dropdown,
+  },
+
   // 基礎版
-  props: ['propProduct'],
-  emits: ['push-data'],
+  props: ["propProduct"],
+  emits: ["push-data"],
   // 詳細版
   // props: {
   //   propProduct: {
@@ -140,48 +212,87 @@ export default{
   //   }
   // },
 
-  setup(props, { attrs, slots, emit }){
+  setup(props, { attrs, slots, emit }) {
+    const webApi = `${process.env.VUE_APP_WebAPI}/productcategory`;
     const { t } = useI18n();
-    // console.log('props:', props);
     const tempProduct = ref({});
+    const allProductCategory = ref({});
+    const categoryItems = ref([
+      //   {
+      //     name: "全部商品",
+      //     code: "All",
+      //   },
+    ]);
+    const cities = ref([
+      { name: "New York", code: "NY" },
+      { name: "Rome", code: "RM" },
+      { name: "London", code: "LDN" },
+      { name: "Istanbul", code: "IST" },
+      { name: "Paris", code: "PRS" },
+    ]);
 
-    function pushData(){
-      emit('push-data', tempProduct.value);
+    function pushData() {
+      emit("push-data", tempProduct.value);
     }
-    
+
+    function getProductCategory() {
+      $axios
+        .get(webApi)
+        .then((res) => {
+          allProductCategory.value = res.data.data;
+          delete allProductCategory.value.All; // 刪除 "All": "全部商品"
+          categoryItems.value = Object.entries(allProductCategory.value).map(
+            (Category) => {
+              return {
+                name: Category[1], // 全部商品
+                code: Category[0], // All
+              };
+            }
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     watch(
       () => {
         tempProduct.value = props.propProduct;
       },
       { deep: true }
-    )
+    );
 
     const myModal = ref(null);
-    const modal = ref(null);  // ref="modal"
-    
+    const modal = ref(null); // ref="modal"
+
     onMounted(() => {
       myModal.value = new Modal(modal.value);
       // myModal.value.show();
-    })
-    
-    function showModal(){
+      getProductCategory();
+    });
+
+    function showModal() {
       myModal.value.show();
     }
 
-    function hideModal(){
+    function hideModal() {
       myModal.value.hide();
     }
 
-    return{
+    return {
+      webApi,
       t,
       tempProduct,
+      cities,
       pushData,
+      allProductCategory,
+      categoryItems,
+      getProductCategory,
       modal,
       myModal,
       showModal,
-      hideModal
-    }
-  }
-}
-
+      hideModal,
+    };
+  },
+};
 </script>
